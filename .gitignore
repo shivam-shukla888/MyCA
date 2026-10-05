@@ -8,6 +8,8 @@ __pycache__/
 .env.*
 *.pem
 *.key
+*.secret_key
+data/.secret_key
 
 # Database & dynamic runtime uploads
 data/*.db
