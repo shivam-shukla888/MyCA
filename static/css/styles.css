@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap');
+
+:root {
+  --surface: #f9f9f7;
+  --surface-dim: #dadad8;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f4f4f2;
+  --surface-container: #eeeeec;
+  --surface-container-high: #e8e8e6;
+  --surface-container-highest: #e2e3e1;
+  --on-surface: #1a1c1b;
+  --on-surface-variant: #45464d;
+  --inverse-surface: #2f3130;
+  --inverse-on-surface: #f1f1ef;
+  --outline: #76777d;
+  --outline-variant: #c6c6cd;
+  --primary: #0f172a;
+  --on-primary: #ffffff;
+  --primary-container: #131b2e;
+  --on-primary-container: #7c839b;
+  --secondary: #1e3a2f;
+  --secondary-accent: #065f46;
+  --secondary-container: #c7e7d7;
+  --on-secondary-container: #032017;
+  --amber-alert: #b45309;
+  --amber-container: #fef3c7;
+  --error: #be123c;
+  --error-container: #ffe4e6;
+  --border-subtle: #e7e5e0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--surface);
+  color: var(--on-surface);
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-serif, h1, h2, h3, .font-headline {
+  font-family: 'Newsreader', Georgia, serif;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Scrollbar refinement */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface-container-low);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--outline-variant);
+  border-radius: 3px;
+}
+
+/* Modals & Drawers */
+.modal-backdrop {
+  background-color: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+.sovereign-card {
+  background-color: var(--surface-container-lowest);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+.trust-badge-verified {
+  background-color: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.trust-badge-calculated {
+  background-color: #f8fafc;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.trust-badge-review {
+  background-color: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}

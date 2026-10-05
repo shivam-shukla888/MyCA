@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>myCA — Sovereign Ledger Financial Operating System</title>
+  
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+
+  <!-- Tailwind CDN for Layout utility & Custom Sovereign Ledger CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#f9f9f7",
+            "surface-dim": "#dadad8",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f4f4f2",
+            "surface-container": "#eeeeec",
+            "surface-container-high": "#e8e8e6",
+            "surface-container-highest": "#e2e3e1",
+            "on-surface": "#1a1c1b",
+            "on-surface-variant": "#45464d",
+            "primary": "#0f172a",
+            "primary-container": "#131b2e",
+            "on-primary": "#ffffff",
+            "secondary": "#1e3a2f",
+            "secondary-accent": "#065f46",
+            "secondary-container": "#c7e7d7",
+            "on-secondary-container": "#032017",
+            "error": "#be123c",
+            "error-container": "#ffe4e6"
+          },
+          spacing: {
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem",
+            "margin": "2rem",
+            "gutter": "1.5rem"
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="/css/styles.css"/>
+</head>
+<body class="bg-surface text-on-surface antialiased font-normal">
+
+  <!-- ================= SIDEBAR NAVIGATION ================= -->
+  <aside class="fixed left-0 top-0 h-full w-[260px] bg-surface-container-low border-r border-[#e7e5e0] z-50 flex flex-col justify-between overflow-y-auto">
+    <div class="flex flex-col">
+      <!-- Wordmark & Operational Badge -->
+      <div class="p-space-lg pb-space-md border-b border-[#e7e5e0] flex flex-col gap-space-xs">
+        <div class="flex items-center gap-space-sm">
+          <div class="w-8 h-8 rounded bg-primary-container text-white flex items-center justify-center font-bold text-sm tracking-wider font-serif">
+            CA
+          </div>
+          <div class="flex flex-col">
+            <span class="font-headline text-[18px] font-semibold tracking-tight text-on-surface leading-none">myCA</span>
+            <span class="text-[11px] font-semibold uppercase tracking-wider text-on-surface-variant">Sovereign Ledger</span>
+          </div>
+        </div>
+        <div class="mt-space-sm flex items-center gap-space-xs px-2 py-0.5 rounded bg-surface-container text-secondary text-[11px] font-semibold">
+          <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+          <span>Operational • Synced</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-space-md flex flex-col gap-1">
+        <span class="px-space-sm py-1 text-[11px] font-semibold uppercase tracking-widest text-on-surface-variant/70">Core Operating</span>
+        
+        <button onclick="switchView('home')" data-nav-view="home" class="flex items-center gap-space-sm px-space-sm py-2 rounded bg-surface-container-lowest text-on-surface shadow-[0_1px_3px_rgba(0,0,0,0.06)] font-semibold transition-colors">
+          <span class="material-symbols-outlined text-[18px]">space_dashboard</span>
+          <span class="text-[13px]">Home</span>
+        </button>
+
+        <button onclick="switchView('money')" data-nav-view="money" class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors">
+          <span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+          <span class="text-[13px]">Money</span>
+        </button>
+
+        <button onclick="switchView('goals')" data-nav-view="goals" class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors">
+          <span class="material-symbols-outlined text-[18px]">flag</span>
+          <span class="text-[13px]">Goals & Simulator</span>
+        </button>
+
+        <button onclick="switchView('ask_myca')" data-nav-view="ask_myca" class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors">
+          <span class="material-symbols-outlined text-[18px]">support_agent</span>
+          <span class="text-[13px]">Ask myCA</span>
+        </button>
+
+        <button onclick="switchView('vault')" data-nav-view="vault" class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors">
+          <span class="material-symbols-outlined text-[18px]">inventory_2</span>
+          <span class="text-[13px]">Document Vault</span>
+        </button>
+
+        <div class="my-space-sm border-t border-[#e7e5e0]"></div>
+        <span class="px-space-sm py-1 text-[11px] font-semibold uppercase tracking-widest text-on-surface-variant/70">Audit & Disclosures</span>
+
+        <button onclick="switchView('vault')" class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors">
+          <span class="material-symbols-outlined text-[18px]">receipt_long</span>
+          <span class="text-[13px]">Tax & Form 16</span>
+        </button>
+        <button onclick="switchView('vault')" class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors">
+          <span class="material-symbols-outlined text-[18px]">verified_user</span>
+          <span class="text-[13px]">Compliance Audit</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- User Profile & Tenant Switcher (Multi-Tenant Isolation Demo) -->
+    <div class="p-space-md border-t border-[#e7e5e0] flex flex-col gap-space-sm bg-surface-container-low">
+      <div class="flex items-center gap-space-sm p-2 rounded bg-surface-container-lowest border border-[#e7e5e0]">
+        <div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center font-bold text-xs text-on-surface">
+          AS
+        </div>
+        <div class="flex flex-col min-w-0 flex-1">
+          <span class="text-[13px] font-semibold text-on-surface truncate user-name-display">Aarav Sharma</span>
+          <span class="text-[11px] text-on-surface-variant truncate user-email-display">Private Client • AY 24-25</span>
+        </div>
+      </div>
+
+      <!-- Tenant Switcher Dropdown (Security Verification) -->
+      <div class="flex flex-col gap-1">
+        <label class="text-[10px] uppercase font-bold tracking-wider text-on-surface-variant">Tenant Isolation Switch:</label>
+        <select onchange="switchUserTenant(this.value)" class="text-[11px] bg-surface-container-lowest border border-[#e7e5e0] rounded px-2 py-1 text-on-surface focus:outline-none">
+          <option value="usr_aarav_01">Client A: Aarav Sharma (Active)</option>
+          <option value="usr_priya_02">Client B: Priya Patel (Isolated)</option>
+        </select>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= TOP HEADER ================= -->
+  <div class="pl-[260px]">
+    <header class="fixed top-0 left-[260px] right-0 h-16 bg-surface/90 backdrop-blur-md border-b border-[#e7e5e0] z-40 flex items-center justify-between px-gutter">
+      <!-- Search Bar -->
+      <div class="flex items-center gap-space-md flex-1 max-w-xl">
+        <div class="relative w-full max-w-md">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+          <input id="globalSearchInput" onkeydown="if(event.key==='Enter'){switchView('money'); document.getElementById('txSearchInput').value=this.value; loadTransactions();}" class="w-full pl-9 pr-4 py-2 bg-surface-container-lowest border border-[#e7e5e0] rounded text-[13px] text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-on-surface" placeholder="Search statements, transactions, or ask myCA..." type="text"/>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-space-md">
+        <div class="hidden xl:flex items-center gap-space-xs px-space-sm py-1 bg-surface-container-low border border-[#e7e5e0] rounded text-[12px] text-on-surface-variant">
+          <span class="material-symbols-outlined text-[16px] text-secondary">gavel</span>
+          <span>Finance Act 2024 • Reconciled</span>
+        </div>
+        <div class="flex items-center gap-space-xs">
+          <button onclick="openUploadModal()" class="px-space-md py-2 bg-primary-container text-on-primary text-[13px] font-semibold rounded flex items-center gap-1.5 hover:bg-on-surface transition-colors" type="button">
+            <span class="material-symbols-outlined text-[16px]">upload_file</span>
+            <span>Upload Document</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= MAIN CONTENT CONTAINER ================= -->
+    <main class="relative pt-16 bg-surface min-h-screen">
+      <div class="w-full max-w-[1320px] mx-auto p-margin">
+
+        <!-- ================= VIEW 1: HOME (FINANCIAL COMMAND CENTER) ================= -->
+        <div id="view-home" class="view-section flex flex-col w-full">
+          <!-- Header Banner with Time-of-Day Greeting -->
+          <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md pb-space-lg mb-space-md">
+            <div>
+              <div class="flex items-center gap-space-sm mb-1">
+                <span class="text-[11px] uppercase tracking-widest font-semibold text-on-surface-variant">Personal Financial Operating System</span>
+                <span class="w-1 h-1 rounded-full bg-secondary"></span>
+                <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-secondary bg-secondary-container/50 px-2 py-0.5 rounded">
+                  <span class="material-symbols-outlined text-[13px]">verified</span> Sovereign Ledger Active
+                </span>
+              </div>
+              <h1 id="homeGreeting" class="font-serif text-[34px] text-on-surface tracking-tight font-medium leading-tight">Good day, <span class="user-name-display">Aarav</span></h1>
+              <p class="text-[14px] text-on-surface-variant">Continuous understanding of your money — what changed, what matters, and what to do next.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="openUploadModal()" class="px-3 py-2 bg-surface-container-lowest border border-[#e7e5e0] text-on-surface text-[13px] font-semibold rounded shadow-sm hover:bg-surface-container transition-colors flex items-center gap-1">
+                <span class="material-symbols-outlined text-[16px]">add</span> Naya Document Add Karein
+              </button>
+            </div>
+          </div>
+
+          <!-- Explainable Financial Health Strip (5 Pillars — No Arbitrary Composite Score) -->
+          <div class="mb-space-lg">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] uppercase font-bold tracking-wider text-on-surface-variant flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[15px] text-secondary">monitor_heart</span>
+                Financial Health & Resilience
+              </span>
+              <span id="healthAuditBadge" class="text-[11px] text-on-surface-variant font-medium">Explainable 5-Pillar Model</span>
+            </div>
+            <div id="homeHealthPillars" class="grid grid-cols-2 md:grid-cols-5 gap-space-sm">
+              <!-- Populated dynamically via JS -->
+            </div>
+          </div>
+
+          <!-- Section: "YOUR MONEY" Simple Hero Card -->
+          <section class="sovereign-card p-space-xl mb-space-lg relative overflow-hidden bg-surface-container-lowest">
+            <div class="flex flex-col gap-space-lg">
+              <div class="flex items-center justify-between">
+                <span class="text-[12px] font-bold uppercase tracking-widest text-on-surface-variant">YOUR MONEY • SNAPSHOT</span>
+                <span class="trust-badge-verified text-[11px] font-semibold px-2 py-0.5 rounded flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[13px]">verified</span> Verified from document
+                </span>
+              </div>
+
+              <!-- Big Hero Numeral -->
+              <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-4">
+                <div class="cursor-pointer" onclick="openSourceDrawer('Net Savings Left', 'Monthly Surplus', 27700, 'Bank Statement', 1, 'CALCULATED', 'Opening: ₹45,500 + Inward: ₹82,000 - Outward: ₹54,300 = Balance ₹73,200 (Net Savings: ₹27,700)')">
+                  <div class="text-[50px] font-bold tracking-tight text-on-surface tabular-nums leading-none" id="homeSavingsLeft">
+                    ₹27,700
+                  </div>
+                  <div class="text-[13px] text-on-surface-variant mt-1">left this month (net savings)</div>
+                </div>
+
+                <div class="flex items-center gap-6 text-right">
+                  <div>
+                    <span class="text-[11px] uppercase tracking-wider text-on-surface-variant block font-medium">Liquid Bank Balance</span>
+                    <span class="text-[20px] font-bold text-on-surface tabular-nums" id="homeLiquidBalance">₹73,200</span>
+                  </div>
+                  <div class="h-8 w-px bg-[#e7e5e0]"></div>
+                  <div>
+                    <span class="text-[11px] uppercase tracking-wider text-on-surface-variant block font-medium">Net Worth</span>
+                    <span class="text-[20px] font-bold text-secondary tabular-nums" id="homeNetWorth">₹12,40,500</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Paisa Aaya / Paisa Gaya / You Saved Strip -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-space-md pt-space-md border-t border-[#e7e5e0]">
+                <!-- Paisa Aaya -->
+                <div class="p-space-md bg-surface-container-low/50 rounded-lg cursor-pointer hover:bg-surface-container-low transition-colors" onclick="openSourceDrawer('Salary Income', 'Salary', 82000, 'Bank Statement', 1, 'VERIFIED_FROM_DOCUMENT', 'ACH CR-INFOSYS LIMITED-SALARY-OCT2024 (Page 1)')">
+                  <div class="text-[12px] text-on-surface-variant font-medium">Paisa aaya:</div>
+                  <div class="text-[24px] font-bold text-secondary tabular-nums mt-0.5" id="homePaisaAaya">₹82,000</div>
+                  <div class="text-[11px] text-secondary flex items-center gap-1 mt-1">
+                    <span class="material-symbols-outlined text-[13px]">verified</span> 1 verified credit
+                  </div>
+                </div>
+
+                <!-- Paisa Gaya -->
+                <div class="p-space-md bg-surface-container-low/50 rounded-lg cursor-pointer hover:bg-surface-container-low transition-colors" onclick="openSourceDrawer('Total Monthly Debits', 'Expenses', 54300, 'Bank Statement', 4, 'VERIFIED_FROM_DOCUMENT', 'Total Outward Remittances: 12 transactions reconciled across Pages 1-4')">
+                  <div class="text-[12px] text-on-surface-variant font-medium">Paisa gaya:</div>
+                  <div class="text-[24px] font-bold text-on-surface tabular-nums mt-0.5" id="homePaisaGaya">₹54,300</div>
+                  <div class="text-[11px] text-on-surface-variant mt-1">Across 12 transactions</div>
+                </div>
+
+                <!-- You Saved -->
+                <div class="p-space-md bg-surface-container-low/50 rounded-lg cursor-pointer hover:bg-surface-container-low transition-colors" onclick="openSourceDrawer('Net Savings', 'Surplus', 27700, 'Bank Statement', 1, 'CALCULATED', 'Income (₹82,000) - Expenses (₹54,300) = ₹27,700')">
+                  <div class="text-[12px] text-on-surface-variant font-medium">You saved:</div>
+                  <div class="text-[24px] font-bold text-secondary tabular-nums mt-0.5" id="homeYouSaved">₹27,700</div>
+                  <div class="text-[11px] text-secondary font-semibold mt-1" id="homeSavingsRateText">33.8% savings rate</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Core OS Intelligence: "WHAT CHANGED?" & "NEXT BEST ACTION" -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-space-lg">
+            <!-- Left 6: WHAT CHANGED? -->
+            <div class="lg:col-span-6 sovereign-card p-space-lg flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-space-sm">
+                  <div class="flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-secondary text-[20px]">change_circle</span>
+                    <h2 class="font-serif text-[20px] font-semibold text-on-surface">What Changed?</h2>
+                  </div>
+                  <span class="text-[11px] text-on-surface-variant font-medium" id="whatChangedPeriod">Current vs Previous</span>
+                </div>
+                <p class="text-[12px] text-on-surface-variant mb-space-md" id="whatChangedSummary">Comparing your recent statement against verified baseline.</p>
+
+                <div class="space-y-space-sm" id="homeWhatChangedList">
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+
+              <!-- ONE IMPORTANT THING BANNER -->
+              <div class="mt-space-md pt-space-sm border-t border-[#e7e5e0]" id="homeOneImportantThingBox">
+                <div class="p-3 bg-amber-50/70 border border-amber-200/80 rounded-lg flex items-start gap-2.5">
+                  <span class="material-symbols-outlined text-amber-700 text-[18px] mt-0.5">priority_high</span>
+                  <div class="flex-1">
+                    <span class="text-[11px] uppercase font-bold tracking-wider text-amber-800 block">One Important Thing</span>
+                    <p class="text-[13px] font-semibold text-amber-950 mt-0.5" id="oneImportantHeadline">Food spending ₹2,400 zyada hai.</p>
+                    <p class="text-[11px] text-amber-900/80 mt-0.5" id="oneImportantDetail">Dining debits grew +41% vs prior baseline. Statement Page 1.</p>
+                  </div>
+                  <button id="oneImportantDrillBtn" onclick="openSourceDrawer('Food Spend Surge', 'Category Surge', 2400, 'Bank Statement', 1, 'VERIFIED_FROM_DOCUMENT', 'Food & Dining debits rose from ₹5,800 to ₹8,200 (+₹2,400)')" class="text-[11px] font-bold text-amber-900 underline hover:text-amber-950 whitespace-nowrap">
+                    Kaise pata chala?
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right 6: NEXT BEST ACTION (Deterministic & Safe) -->
+            <div class="lg:col-span-6 sovereign-card p-space-lg bg-surface-container-low/30 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-space-sm">
+                  <div class="flex items-center gap-2 text-secondary">
+                    <span class="material-symbols-outlined text-[20px]">lightbulb</span>
+                    <span class="text-[12px] uppercase font-bold tracking-wider">Next Best Action</span>
+                  </div>
+                  <span class="text-[10px] bg-secondary-container text-secondary font-bold px-2 py-0.5 rounded">DETERMINISTIC</span>
+                </div>
+
+                <h3 class="font-serif text-[22px] text-on-surface leading-snug mb-2 font-medium" id="homeNextActionHeadline">
+                  ₹27,700 bach rahe hain. Aap ₹10,000 emergency fund mein rakh sakte hain.
+                </h3>
+                <p class="text-[13px] text-on-surface-variant leading-relaxed mb-4" id="homeNextActionRec">
+                  Is surplus mein se ₹10,000 emergency reserve mein allocate karne se aapka liquid buffer 1.5 months tak secure ho sakta hai.
+                </p>
+
+                <!-- FACT / CALCULATION / RECOMMENDATION Previews -->
+                <div class="p-3 bg-surface-container-lowest rounded-lg border border-[#e7e5e0] space-y-1.5 text-[12px]">
+                  <div class="flex items-start gap-2">
+                    <span class="font-bold text-on-surface-variant w-24 shrink-0 uppercase text-[10px]">1. Fact:</span>
+                    <span class="text-on-surface" id="homeActionFact">Monthly surplus is ₹27,700; current emergency runway is 1.3 months.</span>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <span class="font-bold text-on-surface-variant w-24 shrink-0 uppercase text-[10px]">2. Calculation:</span>
+                    <span class="text-on-surface font-mono text-[11px]" id="homeActionCalc">₹82,000 - ₹54,300 = ₹27,700 surplus. ₹73,200 / ₹54,300 = 1.3m runway.</span>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <span class="font-bold text-secondary w-24 shrink-0 uppercase text-[10px]">3. Suggestion:</span>
+                    <span class="text-secondary font-medium" id="homeActionRecBrief">Consider adding ₹10,000 to Emergency Fund.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-space-lg pt-space-md border-t border-[#e7e5e0] flex items-center justify-between">
+                <button onclick="openSeeWhyModal()" class="text-[13px] font-semibold text-secondary hover:underline flex items-center gap-1">
+                  <span>See why</span> <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+                </button>
+                <div class="flex items-center gap-2">
+                  <button onclick="switchView('goals')" class="px-3 py-2 bg-primary-container text-on-primary text-[12px] font-semibold rounded hover:bg-on-surface transition-colors">
+                    Goals mein dekhein
+                  </button>
+                  <button onclick="switchView('ask_myca'); submitAdvisoryQuery('Aapne emergency fund boost recommend kiya, kripya explain karein.')" class="px-3 py-2 bg-surface-container-lowest border border-[#e7e5e0] text-on-surface text-[12px] font-semibold rounded hover:bg-surface-container transition-colors">
+                    Samjhao
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: FINANCIAL INBOX ("Needs Your Attention") -->
+          <section class="sovereign-card p-space-lg mb-space-xl">
+            <div class="flex items-center justify-between mb-space-md">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-[20px] text-on-surface">inbox</span>
+                <h2 class="font-serif text-[20px] font-semibold text-on-surface">Financial Inbox</h2>
+                <span id="inboxCountBadge" class="text-[11px] font-bold px-2 py-0.5 rounded bg-surface-container-high text-on-surface">3 active</span>
+              </div>
+              <span class="text-[12px] text-on-surface-variant">Prioritized by financial severity</span>
+            </div>
+
+            <div class="space-y-space-xs" id="homeInboxList">
+              <!-- Populated dynamically via JS -->
+            </div>
+          </section>
+        </div>
+
+        <!-- ================= VIEW 2: MONEY (DETAILED LEDGER & PASSBOOK) ================= -->
+        <div id="view-money" class="view-section hidden flex flex-col w-full">
+          <!-- Header -->
+          <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md mb-space-xl">
+            <div>
+              <div class="flex items-center gap-space-sm mb-1">
+                <span class="trust-badge-verified px-2 py-0.5 rounded text-[11px] font-semibold flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Document Ledger Reconciled
+                </span>
+                <span class="text-[11px] text-on-surface-variant uppercase tracking-wider">HDFC Bank • XXXX5892</span>
+              </div>
+              <h1 class="font-serif text-[32px] text-on-surface font-medium leading-tight">Paisa aaya aur gaya (Ledgers)</h1>
+              <p class="text-[14px] text-on-surface-variant">Reconciled against original bank statement. Every transaction is auditable.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="openUploadModal()" class="px-3 py-2 bg-surface-container-lowest border border-[#e7e5e0] text-on-surface text-[13px] font-semibold rounded shadow-sm hover:bg-surface-container transition-colors flex items-center gap-1">
+                <span class="material-symbols-outlined text-[16px]">upload_file</span> Naya PDF Jodein
+              </button>
+            </div>
+          </div>
+
+          <!-- Net Worth & Asset / Liability Stack (Section 11) -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-space-xl">
+            <!-- Consolidated Net Position -->
+            <div class="lg:col-span-4 sovereign-card p-space-lg flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-space-xs">
+                  <span class="text-[11px] uppercase font-bold tracking-wider text-on-surface-variant">Paisa kahan laga hai</span>
+                  <span class="trust-badge-verified text-[10px] font-bold px-1.5 py-0.5 rounded">VERIFIED</span>
+                </div>
+                <div class="text-[36px] font-bold text-on-surface tabular-nums my-1" id="moneyHeroBalance">₹12,40,500</div>
+                <div class="text-[13px] text-on-surface-variant">Net liquid & portfolio position</div>
+              </div>
+              <div class="pt-space-md mt-space-md border-t border-[#e7e5e0] space-y-2">
+                <div class="flex justify-between text-[13px]">
+                  <span class="text-on-surface-variant">Liquid Bank Balance:</span>
+                  <span class="font-semibold tabular-nums" id="moneyLiquidBankValue">₹73,200</span>
+                </div>
+                <div class="flex justify-between text-[13px]">
+                  <span class="text-on-surface-variant">Mutual Funds (Direct):</span>
+                  <span class="font-semibold tabular-nums">₹8,25,500</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Liabilities (Mera karz) -->
+            <div class="lg:col-span-4 sovereign-card p-space-lg flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-space-xs">
+                  <span class="text-[11px] uppercase font-bold tracking-wider text-on-surface-variant">Mera karz (Liabilities)</span>
+                  <span class="text-[10px] bg-surface-container-high px-1.5 py-0.5 rounded font-semibold text-on-surface-variant">AUTO LOAN</span>
+                </div>
+                <div class="text-[36px] font-bold text-on-surface tabular-nums my-1" id="moneyDebtValue">₹9,000</div>
+                <div class="text-[13px] text-on-surface-variant">Monthly term installment liability</div>
+              </div>
+              <div class="pt-space-md mt-space-md border-t border-[#e7e5e0] flex items-center justify-between text-[13px]">
+                <span class="text-on-surface-variant">Lender: State Bank of India</span>
+                <span class="text-secondary font-semibold">Active Auto Debit</span>
+              </div>
+            </div>
+
+            <!-- Account Summary Card -->
+            <div class="lg:col-span-4 sovereign-card p-space-lg flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-space-xs">
+                  <span class="text-[11px] uppercase font-bold tracking-wider text-on-surface-variant">Source Account</span>
+                  <span class="trust-badge-verified text-[10px] font-bold px-1.5 py-0.5 rounded">RBI-AA</span>
+                </div>
+                <div class="font-serif text-[22px] font-semibold text-on-surface mt-1">HDFC Bank Limited</div>
+                <div class="text-[13px] text-on-surface-variant mt-0.5">Regular Savings • Account: <strong>XXXX5892</strong></div>
+              </div>
+              <div class="pt-space-md mt-space-md border-t border-[#e7e5e0] flex items-center justify-between">
+                <button onclick="openPdfViewer('doc_primary', 'HDFC_Bank_Statement_Oct2024.pdf', 1, 'HDFC Bank Account Details', 'Opening Balance: ₹45,500')" class="text-[12px] font-semibold text-secondary hover:underline flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[15px]">description</span> View Original PDF
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 12: Verified Passbook & Audit Trail -->
+          <section class="sovereign-card p-space-lg mb-space-xl">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-lg">
+              <div>
+                <h2 class="font-serif text-[22px] font-semibold text-on-surface">Verified Passbook & Transactions</h2>
+                <span class="text-[13px] text-on-surface-variant">Direct parsed feed with page traceability. Tap any row to inspect source.</span>
+              </div>
+
+              <!-- Search & Filters -->
+              <div class="flex flex-wrap items-center gap-space-sm">
+                <div class="relative min-w-[200px]">
+                  <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[16px]">search</span>
+                  <input id="txSearchInput" oninput="loadTransactions()" class="w-full pl-8 pr-3 py-1.5 bg-surface-container-low rounded text-[13px] text-on-surface focus:outline-none focus:bg-surface-container-lowest" placeholder="Search merchant, narrative..." type="text"/>
+                </div>
+
+                <select id="txCategoryFilter" onchange="loadTransactions()" class="px-2 py-1.5 bg-surface-container-low rounded text-[12px] text-on-surface border-none focus:outline-none">
+                  <option value="">All Categories</option>
+                  <option value="Rent">Rent</option>
+                  <option value="Salary">Salary</option>
+                  <option value="Food & Dining">Food & Dining</option>
+                  <option value="Shopping">Shopping</option>
+                  <option value="Electricity & Utilities">Electricity & Utilities</option>
+                  <option value="Transit & Fuel">Transit & Fuel</option>
+                  <option value="Lifestyle & Wellness">Lifestyle & Wellness</option>
+                  <option value="Loans & EMI">Loans & EMI</option>
+                </select>
+
+                <select id="txTypeFilter" onchange="loadTransactions()" class="px-2 py-1.5 bg-surface-container-low rounded text-[12px] text-on-surface border-none focus:outline-none">
+                  <option value="ALL">All Types</option>
+                  <option value="DEBIT">Debits Only</option>
+                  <option value="CREDIT">Credits Only</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Transactions Rows Container -->
+            <div class="space-y-space-xs" id="moneyPassbookRows">
+              <!-- Populated dynamically via JS -->
+            </div>
+          </section>
+        </div>
+
+        <!-- ================= VIEW: GOALS & WHAT-IF SIMULATOR ================= -->
+        <div id="view-goals" class="view-section hidden flex flex-col w-full">
+          <!-- Header -->
+          <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md mb-space-xl">
+            <div>
+              <div class="flex items-center gap-space-sm mb-1">
+                <span class="trust-badge-verified px-2 py-0.5 rounded text-[11px] font-semibold flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Deterministic Goal Projections
+                </span>
+                <span class="text-[11px] text-on-surface-variant uppercase tracking-wider">Zero Speculative Math</span>
+              </div>
+              <h1 class="font-serif text-[32px] text-on-surface font-medium leading-tight">Financial Goals & Simulator</h1>
+              <p class="text-[14px] text-on-surface-variant">Track tangible targets and model what-if scenarios based on validated cash flow.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="openNewGoalModal()" class="px-space-md py-2.5 bg-primary-container text-on-primary font-semibold text-[13px] rounded hover:bg-on-surface transition-colors flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[16px]">add_circle</span>
+                <span>Naya Goal Banayein</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Active Goals Grid -->
+          <div class="mb-space-xl">
+            <h2 class="font-serif text-[22px] font-semibold text-on-surface mb-space-md">Active Financial Goals</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-space-md" id="goalsListContainer">
+              <!-- Populated dynamically via JS -->
+            </div>
+          </div>
+
+          <!-- Deterministic What-If Simulator -->
+          <section class="sovereign-card p-space-xl mb-space-xl bg-surface-container-low/30">
+            <div class="flex items-center justify-between mb-space-md">
+              <div class="flex items-center gap-2 text-secondary">
+                <span class="material-symbols-outlined text-[24px]">model_training</span>
+                <div>
+                  <h2 class="font-serif text-[22px] font-semibold text-on-surface">What-If Financial Simulator</h2>
+                  <span class="text-[12px] text-on-surface-variant">Deterministic arithmetic modeling. Understand consequences before taking action.</span>
+                </div>
+              </div>
+              <span class="text-[10px] bg-secondary-container text-secondary font-bold px-2 py-0.5 rounded">NO AI GUESSWORK</span>
+            </div>
+
+            <!-- Simulator Input Strip -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-space-lg">
+              <!-- Scenario 1: Save More Monthly -->
+              <div class="lg:col-span-6 p-space-lg bg-surface-container-lowest rounded-xl border border-[#e7e5e0]">
+                <span class="text-[11px] uppercase font-bold tracking-wider text-secondary block mb-1">Scenario A</span>
+                <h3 class="font-serif text-[18px] font-semibold text-on-surface mb-2">What if I save more every month?</h3>
+                <p class="text-[12px] text-on-surface-variant mb-space-md">Enter extra monthly savings to calculate accelerated goal dates and capital accumulation.</p>
+
+                <div class="flex items-center gap-2 mb-space-md">
+                  <div class="relative flex-1">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface font-semibold text-[13px]">₹</span>
+                    <input id="simExtraSavingsInput" type="number" value="5000" step="1000" class="w-full pl-7 pr-3 py-2 bg-surface-container-low rounded border border-[#e7e5e0] text-[14px] font-semibold text-on-surface focus:outline-none" placeholder="Extra savings amount"/>
+                  </div>
+                  <button onclick="runSavingsSimulation()" class="px-4 py-2 bg-primary-container text-on-primary font-semibold text-[13px] rounded hover:bg-on-surface transition-colors whitespace-nowrap">
+                    Simulate
+                  </button>
+                </div>
+
+                <div class="flex flex-wrap gap-2 mb-space-md">
+                  <button onclick="setSimSavings(2000)" class="px-2.5 py-1 bg-surface-container-low hover:bg-surface-container rounded text-[11px] font-semibold text-on-surface">+₹2,000/mo</button>
+                  <button onclick="setSimSavings(5000)" class="px-2.5 py-1 bg-surface-container-low hover:bg-surface-container rounded text-[11px] font-semibold text-on-surface">+₹5,000/mo</button>
+                  <button onclick="setSimSavings(10000)" class="px-2.5 py-1 bg-surface-container-low hover:bg-surface-container rounded text-[11px] font-semibold text-on-surface">+₹10,000/mo</button>
+                </div>
+
+                <!-- Simulation Output -->
+                <div id="simSavingsResult" class="p-3 bg-secondary-container/30 border border-secondary-container rounded-lg space-y-2 text-[12px]">
+                  <div class="flex justify-between items-center">
+                    <span class="text-on-surface-variant font-medium">1-Year Extra Accumulation:</span>
+                    <span class="font-bold text-secondary text-[14px] tabular-nums" id="simResult1Yr">₹60,000</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-on-surface-variant font-medium">3-Year Extra Accumulation:</span>
+                    <span class="font-bold text-secondary text-[14px] tabular-nums" id="simResult3Yr">₹1,80,000</span>
+                  </div>
+                  <div class="pt-2 border-t border-secondary-container/60 text-[11px] text-on-surface" id="simResultGoalImpact">
+                    Emergency Fund timeline will accelerate by ~2.3 months.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Scenario 2: Reduce Expense Category -->
+              <div class="lg:col-span-6 p-space-lg bg-surface-container-lowest rounded-xl border border-[#e7e5e0]">
+                <span class="text-[11px] uppercase font-bold tracking-wider text-secondary block mb-1">Scenario B</span>
+                <h3 class="font-serif text-[18px] font-semibold text-on-surface mb-2">What if I reduce category spending?</h3>
+                <p class="text-[12px] text-on-surface-variant mb-space-md">Simulate freed-up cash flow by cutting discretionary expense categories.</p>
+
+                <div class="grid grid-cols-2 gap-2 mb-space-md">
+                  <div>
+                    <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">Category</label>
+                    <select id="simExpenseCategorySelect" class="w-full p-2 bg-surface-container-low rounded border border-[#e7e5e0] text-[13px] text-on-surface focus:outline-none">
+                      <option value="Food & Dining">Food & Dining</option>
+                      <option value="Shopping">Shopping</option>
+                      <option value="Lifestyle & Wellness">Lifestyle & Wellness</option>
+                      <option value="Transit & Fuel">Transit & Fuel</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="text-[10px] uppercase font-bold text-on-surface-variant block mb-1">Reduction %</label>
+                    <select id="simExpenseReductionSelect" class="w-full p-2 bg-surface-container-low rounded border border-[#e7e5e0] text-[13px] text-on-surface focus:outline-none">
+                      <option value="10">10% Cut</option>
+                      <option value="20" selected>20% Cut</option>
+                      <option value="30">30% Cut</option>
+                      <option value="50">50% Cut</option>
+                    </select>
+                  </div>
+                </div>
+
+                <button onclick="runExpenseCutSimulation()" class="w-full mb-space-md py-2 bg-primary-container text-on-primary font-semibold text-[13px] rounded hover:bg-on-surface transition-colors">
+                  Calculate Freed Cash Flow
+                </button>
+
+                <!-- Expense Simulation Output -->
+                <div id="simExpenseResult" class="p-3 bg-secondary-container/30 border border-secondary-container rounded-lg space-y-2 text-[12px]">
+                  <div class="flex justify-between items-center">
+                    <span class="text-on-surface-variant font-medium">Monthly Cash Freed:</span>
+                    <span class="font-bold text-secondary text-[14px] tabular-nums" id="simExpenseFreedMonthly">₹1,640 / mo</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-on-surface-variant font-medium">Annualized Savings Gain:</span>
+                    <span class="font-bold text-secondary text-[14px] tabular-nums" id="simExpenseFreedAnnual">₹19,680 / yr</span>
+                  </div>
+                  <div class="pt-2 border-t border-secondary-container/60 text-[11px] text-on-surface" id="simExpenseExplanation">
+                    Food & Dining reduced from ₹8,200 to ₹6,560.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- ================= VIEW 3: ASK myCA (PRIVATE ADVISORY) ================= -->
+        <div id="view-ask_myca" class="view-section hidden flex flex-col w-full">
+          <!-- Advisory Header -->
+          <div class="p-space-xl bg-surface-container-low/70 rounded-xl mb-space-lg border border-[#e7e5e0]">
+            <div class="flex items-center gap-2 text-secondary text-[11px] uppercase font-bold tracking-widest mb-1">
+              <span class="w-2 h-2 rounded-full bg-secondary"></span>
+              <span>Chartered Advisory Chamber • Grounded In Your Data</span>
+            </div>
+            <h1 class="font-serif text-[32px] text-on-surface font-medium">Ask myCA Advisory Desk</h1>
+            <p class="text-[14px] text-on-surface-variant max-w-2xl leading-relaxed">
+              Ask any question about your cash flow, taxes, rent, or spending. Every answer is deterministically verified from your uploaded financial documents with precise page citations.
+            </p>
+          </div>
+
+          <!-- Suggested Queries (Section 15) -->
+          <div class="mb-space-lg">
+            <span class="text-[11px] uppercase font-bold tracking-wider text-on-surface-variant block mb-2">Common Inquiries:</span>
+            <div class="flex flex-wrap gap-2">
+              <button onclick="submitAdvisoryQuery('Mera paisa sabse zyada kahan ja raha hai?')" class="px-3 py-1.5 bg-surface-container-lowest border border-[#e7e5e0] hover:bg-surface-container rounded-lg text-[13px] text-on-surface transition-colors flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[16px] text-secondary">trending_down</span>
+                <span>Mera paisa sabse zyada kahan ja raha hai?</span>
+              </button>
+              <button onclick="submitAdvisoryQuery('Is mahine kitna paisa bacha?')" class="px-3 py-1.5 bg-surface-container-lowest border border-[#e7e5e0] hover:bg-surface-container rounded-lg text-[13px] text-on-surface transition-colors flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[16px] text-secondary">savings</span>
+                <span>Is mahine kitna paisa bacha?</span>
+              </button>
+              <button onclick="submitAdvisoryQuery('Rent par kitna kharcha hua?')" class="px-3 py-1.5 bg-surface-container-lowest border border-[#e7e5e0] hover:bg-surface-container rounded-lg text-[13px] text-on-surface transition-colors flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[16px] text-secondary">home</span>
+                <span>Rent par kitna kharcha hua?</span>
+              </button>
+              <button onclick="submitAdvisoryQuery('Salary kab aur kitni aayi?')" class="px-3 py-1.5 bg-surface-container-lowest border border-[#e7e5e0] hover:bg-surface-container rounded-lg text-[13px] text-on-surface transition-colors flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[16px] text-secondary">payments</span>
+                <span>Salary kab aur kitni aayi?</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Active Advisory Response Area -->
+          <div id="advisoryResponseArea" class="hidden mb-space-lg">
+            <!-- Dynamic Response Inserted Here -->
+          </div>
+
+          <!-- Chat Input -->
+          <div class="sovereign-card p-space-md flex items-center gap-space-sm bg-surface-container-lowest">
+            <span class="material-symbols-outlined text-on-surface-variant text-[20px]">chat</span>
+            <input id="advisoryInput" onkeydown="if(event.key==='Enter') submitAdvisoryQuery()" class="flex-1 bg-transparent border-none text-[14px] text-on-surface placeholder:text-on-surface-variant focus:outline-none" placeholder="Poochiye: e.g. Mera paisa sabse zyada kahan ja raha hai?..." type="text"/>
+            <button onclick="submitAdvisoryQuery()" class="px-4 py-2 bg-primary-container text-on-primary font-semibold text-[13px] rounded hover:bg-on-surface transition-colors">
+              Poocho
+            </button>
+          </div>
+        </div>
+
+        <!-- ================= VIEW 4: DOCUMENT VAULT / MY DOCUMENTS ================= -->
+        <div id="view-vault" class="view-section hidden flex flex-col w-full">
+          <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md mb-space-xl">
+            <div>
+              <div class="flex items-center gap-space-sm mb-1">
+                <span class="text-[11px] uppercase tracking-widest font-semibold text-on-surface-variant">Document Storage & Ingestion Pipeline</span>
+              </div>
+              <h1 class="font-serif text-[32px] text-on-surface font-medium leading-tight">My Documents</h1>
+              <p class="text-[14px] text-on-surface-variant">All financial PDFs uploaded to your sovereign account.</p>
+            </div>
+            <button onclick="openUploadModal()" class="px-space-md py-2.5 bg-primary-container text-on-primary font-semibold text-[13px] rounded hover:bg-on-surface transition-colors flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[16px]">upload_file</span>
+              <span>Upload New PDF</span>
+            </button>
+          </div>
+
+          <!-- Drag and drop zone -->
+          <div id="uploadDropZone" onclick="openUploadModal()" class="border-2 border-dashed border-[#cbd5e1] hover:border-on-surface bg-surface-container-lowest rounded-xl p-space-xl text-center cursor-pointer transition-colors mb-space-xl">
+            <div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center mx-auto text-secondary mb-space-sm">
+              <span class="material-symbols-outlined text-[24px]">upload_file</span>
+            </div>
+            <p class="font-serif text-[18px] text-on-surface font-medium">Click or drag financial PDF here to ingest</p>
+            <p class="text-[12px] text-on-surface-variant mt-1">Supports Bank Statements, Salary Slips, Form 16, Portfolio PDFs (Max 25MB)</p>
+          </div>
+
+          <!-- Document List Table / Cards (Section 24) -->
+          <section class="sovereign-card p-space-lg mb-space-xl">
+            <h2 class="font-serif text-[20px] font-semibold text-on-surface mb-space-md">Imported Financial Documents</h2>
+            <div class="space-y-space-sm" id="vaultDocList">
+              <!-- Rendered via JS -->
+            </div>
+          </section>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ================= UPLOAD WORKFLOW MODAL ================= -->
+  <div id="uploadModal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-surface-container-lowest border border-[#e7e5e0] rounded-xl max-w-lg w-full p-space-xl shadow-xl relative">
+      <button onclick="closeUploadModal()" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+
+      <!-- State 1: File selection with PDF, Photo, and Multi-Photo options -->
+      <div id="uploadInitialState">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="material-symbols-outlined text-secondary text-[22px]">upload_file</span>
+          <h3 class="font-serif text-[22px] font-semibold text-on-surface">Apna document upload karein</h3>
+        </div>
+        <p class="text-[13px] text-on-surface-variant mb-space-lg leading-relaxed">
+          Bank statement, salary slip, ya Form 16 upload karein. Account numbers mask rahenge.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-space-md">
+          <!-- Button 1: PDF -->
+          <label class="border border-[#e7e5e0] hover:border-on-surface rounded-xl p-4 text-center cursor-pointer block bg-surface-container-low/40 hover:bg-surface-container-low transition-all shadow-sm">
+            <input type="file" id="fileInputPdf" accept=".pdf,application/pdf" class="hidden" onchange="handleFileSelect(event)"/>
+            <span class="material-symbols-outlined text-[28px] text-secondary mb-1">picture_as_pdf</span>
+            <span class="block text-[13px] font-semibold text-on-surface">PDF upload karein</span>
+            <span class="block text-[11px] text-on-surface-variant mt-0.5">Digital bank statement</span>
+          </label>
+
+          <!-- Button 2: Single Photo -->
+          <label class="border border-[#e7e5e0] hover:border-on-surface rounded-xl p-4 text-center cursor-pointer block bg-surface-container-low/40 hover:bg-surface-container-low transition-all shadow-sm">
+            <input type="file" id="fileInputPhoto" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" class="hidden" onchange="handleFileSelect(event)"/>
+            <span class="material-symbols-outlined text-[28px] text-secondary mb-1">photo_camera</span>
+            <span class="block text-[13px] font-semibold text-on-surface">Photo upload karein</span>
+            <span class="block text-[11px] text-on-surface-variant mt-0.5">Mobile photo / slip</span>
+          </label>
+
+          <!-- Button 3: Multiple Photos (One Document) -->
+          <label class="border border-[#e7e5e0] hover:border-on-surface rounded-xl p-4 text-center cursor-pointer block bg-surface-container-low/40 hover:bg-surface-container-low transition-all shadow-sm">
+            <input type="file" id="fileInputMultiPhoto" multiple accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" class="hidden" onchange="handleMultiPhotoSelect(event)"/>
+            <span class="material-symbols-outlined text-[28px] text-secondary mb-1">photo_library</span>
+            <span class="block text-[13px] font-semibold text-on-surface">Multiple photos</span>
+            <span class="block text-[11px] text-on-surface-variant mt-0.5">Page 1, 2, 3 eksath</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- State 2: Processing with Hinglish steps (Section 8 & 20) -->
+      <div id="uploadProcessingState" class="hidden text-center py-space-lg">
+        <div class="w-12 h-12 rounded-full bg-secondary-container text-secondary flex items-center justify-center mx-auto mb-space-md animate-pulse">
+          <span class="material-symbols-outlined text-[24px]">hourglass_top</span>
+        </div>
+        <h4 id="uploadProgressText" class="font-serif text-[18px] font-semibold text-on-surface mb-2">Document read ho raha hai...</h4>
+        <div class="w-full bg-surface-container-high rounded-full h-2 overflow-hidden mb-space-md">
+          <div id="uploadProgressBar" class="bg-secondary h-2 rounded-full transition-all duration-300" style="width: 25%"></div>
+        </div>
+        <p class="text-[12px] text-on-surface-variant">Deterministic arithmetic engine verifications in progress...</p>
+      </div>
+
+      <!-- State 3: Duplicate Warning (Section 6) -->
+      <div id="uploadDuplicateState" class="hidden text-center py-space-md">
+        <div class="w-12 h-12 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center mx-auto mb-space-md">
+          <span class="material-symbols-outlined text-[24px]">content_copy</span>
+        </div>
+        <h4 class="font-serif text-[20px] font-semibold text-on-surface mb-1">Ye document pehle se add hai.</h4>
+        <p class="text-[13px] text-on-surface-variant mb-space-lg">
+          File '<span id="dupExistingFileName" class="font-semibold">Statement.pdf</span>' aapke vault mein already processed hai.
+        </p>
+        <div class="flex items-center justify-center gap-space-sm">
+          <button onclick="closeUploadModal(); switchView('vault');" class="px-4 py-2 bg-surface-container-lowest border border-[#e7e5e0] text-on-surface font-semibold text-[13px] rounded hover:bg-surface-container">
+            View existing
+          </button>
+          <button onclick="handleUploadAnyway()" class="px-4 py-2 bg-primary-container text-on-primary font-semibold text-[13px] rounded hover:bg-on-surface">
+            Upload anyway
+          </button>
+        </div>
+      </div>
+
+      <!-- State 4: Error State (Section 2 & 21) -->
+      <div id="uploadErrorState" class="hidden text-center py-space-md">
+        <div class="w-12 h-12 rounded-full bg-red-100 text-red-800 flex items-center justify-center mx-auto mb-space-md">
+          <span class="material-symbols-outlined text-[24px]">error</span>
+        </div>
+        <h4 id="uploadErrorMessage" class="font-serif text-[20px] font-semibold text-on-surface mb-2">Ye document read nahi ho pa raha.</h4>
+        <p class="text-[13px] text-on-surface-variant mb-space-lg">
+          Please check karein ki file valid readable PDF hai aur password protected nahi hai.
+        </p>
+        <button onclick="resetUploadModal()" class="px-4 py-2 bg-primary-container text-on-primary font-semibold text-[13px] rounded hover:bg-on-surface">
+          Try another file
+        </button>
+      </div>
+
+      <!-- State 5: AI Understood / Success / Review State -->
+      <div id="uploadSuccessState" class="hidden text-center py-space-md">
+        <div id="successIconBadge" class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center mx-auto mb-space-md">
+          <span class="material-symbols-outlined text-[24px]" id="successIcon">verified</span>
+        </div>
+        <h4 id="successHeading" class="font-serif text-[20px] font-semibold text-on-surface mb-1">Humne ye information samjhi hai</h4>
+        <p id="successDocTitle" class="text-[13px] font-semibold text-on-surface mb-2">Statement.pdf</p>
+
+        <!-- Understood Numbers Card -->
+        <div class="bg-surface-container-low p-4 rounded-xl mb-4 text-left border border-[#e7e5e0] space-y-2">
+          <div class="flex items-center justify-between text-[13px]">
+            <span class="text-on-surface-variant">Income:</span>
+            <span id="understoodIncome" class="font-bold text-secondary tabular-nums">₹0</span>
+          </div>
+          <div class="flex items-center justify-between text-[13px]">
+            <span class="text-on-surface-variant">Expenses:</span>
+            <span id="understoodExpenses" class="font-bold text-on-surface tabular-nums">₹0</span>
+          </div>
+          <div class="flex items-center justify-between text-[13px]">
+            <span class="text-on-surface-variant">Account / Details:</span>
+            <span id="understoodAccount" class="font-semibold text-on-surface font-mono">XXXX0000</span>
+          </div>
+        </div>
+
+        <p id="successReconcileMsg" class="text-[12px] text-secondary font-medium mb-space-md">Numbers verified. Zero arithmetic variance.</p>
+
+        <div class="flex items-center justify-center gap-2">
+          <button id="successConfirmBtn" onclick="closeUploadModal(); switchView('home');" class="px-5 py-2.5 bg-primary-container text-on-primary font-semibold text-[13px] rounded hover:bg-on-surface">
+            Confirm
+          </button>
+          <button id="successReviewBtn" onclick="closeUploadModal(); switchView('vault');" class="px-5 py-2.5 bg-surface-container-lowest border border-[#e7e5e0] text-on-surface font-semibold text-[13px] rounded hover:bg-surface-container hidden">
+            Review Karein
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SOURCE / EVIDENCE SLIDE-OUT DRAWER (Section 13) ================= -->
+  <div id="sourceEvidenceDrawer" class="fixed right-0 top-0 bottom-0 w-[420px] max-w-full bg-surface-container-lowest border-l border-[#e7e5e0] shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col justify-between">
+    <div class="p-space-lg overflow-y-auto flex-1">
+      <div class="flex items-center justify-between pb-space-md border-b border-[#e7e5e0] mb-space-md">
+        <div class="flex items-center gap-1.5 text-secondary font-semibold text-[11px] uppercase tracking-wider">
+          <span class="material-symbols-outlined text-[15px]">verified</span>
+          <span>Statutory Provenance Audit</span>
+        </div>
+        <button onclick="closeSourceDrawer()" class="text-on-surface-variant hover:text-on-surface">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <div class="space-y-space-md">
+        <div>
+          <span class="text-[11px] uppercase font-bold text-on-surface-variant">Financial Value</span>
+          <div class="text-[28px] font-bold text-on-surface tabular-nums" id="evidenceAmount">₹18,000</div>
+          <div class="text-[14px] font-medium text-on-surface mt-0.5" id="evidenceTitle">Rent</div>
+          <div class="text-[12px] text-on-surface-variant" id="evidenceCategory">Housing & Utilities</div>
+        </div>
+
+        <div class="p-space-md bg-surface-container-low rounded-lg space-y-2">
+          <div class="flex items-center justify-between text-[13px]">
+            <span class="text-on-surface-variant">Source Document:</span>
+            <span class="font-semibold text-on-surface" id="evidenceDocName">Bank Statement</span>
+          </div>
+          <div class="flex items-center justify-between text-[13px]">
+            <span class="text-on-surface-variant">Page Number:</span>
+            <span class="font-bold text-secondary" id="evidencePageNum">Page 4</span>
+          </div>
+          <div class="flex items-center justify-between text-[13px]">
+            <span class="text-on-surface-variant">Audit Status:</span>
+            <span id="evidenceStatusBadge" class="trust-badge-verified text-[11px] font-semibold px-2 py-0.5 rounded">
+              Verified from document
+            </span>
+          </div>
+        </div>
+
+        <div>
+          <span class="text-[11px] uppercase font-bold text-on-surface-variant block mb-1">Verbatim Extracted Line</span>
+          <div class="p-3 bg-surface-container-highest rounded text-[12px] font-mono text-on-surface leading-relaxed break-words" id="evidenceRawSnippet">
+            NEFT DR-HDFC0000041-HOUSE RENT OCT2024 TO LANDLORD: 18,000.00
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-space-lg border-t border-[#e7e5e0] bg-surface-container-low/50">
+      <button id="evidenceOpenPdfBtn" class="w-full py-2.5 bg-primary-container text-on-primary font-semibold text-[13px] rounded hover:bg-on-surface transition-colors flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-[16px]">visibility</span>
+        <span>Open PDF at Source Page</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= BUILT-IN PDF VIEWER MODAL (Section 14) ================= -->
+  <div id="pdfViewerModal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-surface-container-lowest border border-[#e7e5e0] rounded-xl max-w-5xl w-full h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <!-- Viewer Top Bar -->
+      <div class="p-space-md border-b border-[#e7e5e0] flex items-center justify-between bg-surface-container-low">
+        <div class="flex items-center gap-space-sm">
+          <span class="material-symbols-outlined text-secondary text-[20px]">description</span>
+          <div>
+            <h3 id="viewerDocTitle" class="font-serif text-[16px] font-semibold text-on-surface">Document Viewer</h3>
+            <span id="viewerPageIndicator" class="text-[11px] text-on-surface-variant">Page 1</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="jumpViewerPage(1)" class="px-2.5 py-1 text-[11px] font-semibold rounded bg-surface-container-lowest border border-[#e7e5e0]">P1</button>
+          <button onclick="jumpViewerPage(2)" class="px-2.5 py-1 text-[11px] font-semibold rounded bg-surface-container-lowest border border-[#e7e5e0]">P2</button>
+          <button onclick="jumpViewerPage(3)" class="px-2.5 py-1 text-[11px] font-semibold rounded bg-surface-container-lowest border border-[#e7e5e0]">P3</button>
+          <button onclick="jumpViewerPage(4)" class="px-2.5 py-1 text-[11px] font-semibold rounded bg-surface-container-lowest border border-[#e7e5e0]">P4 (Rent)</button>
+          <div class="h-4 w-px bg-outline-variant/40 mx-1"></div>
+          <button onclick="closePdfViewer()" class="p-1 rounded text-on-surface-variant hover:text-on-surface">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Citation Highlight Bar -->
+      <div id="viewerHighlightBanner" class="p-2.5 bg-amber-50 border-b border-amber-200 text-[12px] text-amber-900 flex items-center gap-2">
+        <span class="material-symbols-outlined text-[16px] text-amber-700">bookmark</span>
+        <span id="viewerHighlightText">Target Source Record</span>
+      </div>
+
+      <!-- PDF Frame -->
+      <div class="flex-1 bg-surface-container-high relative">
+        <iframe id="pdfViewerFrame" class="w-full h-full border-none" src="about:blank"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CATEGORY EDIT MODAL ================= -->
+  <div id="categoryEditModal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-surface-container-lowest border border-[#e7e5e0] rounded-xl max-w-sm w-full p-space-lg shadow-xl">
+      <div class="flex items-center justify-between pb-space-sm border-b border-[#e7e5e0] mb-space-md">
+        <h4 class="font-serif text-[18px] font-semibold text-on-surface">Edit Category</h4>
+        <button onclick="closeCategoryEdit()" class="text-on-surface-variant hover:text-on-surface">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+      <div class="mb-space-md">
+        <label class="text-[12px] font-medium text-on-surface-variant block mb-1">Select New Category:</label>
+        <select id="editCategorySelect" class="w-full p-2 bg-surface-container-low rounded border border-[#e7e5e0] text-[13px] text-on-surface focus:outline-none">
+          <option value="Rent">Rent</option>
+          <option value="Salary">Salary</option>
+          <option value="Food & Dining">Food & Dining</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Electricity & Utilities">Electricity & Utilities</option>
+          <option value="Transit & Fuel">Transit & Fuel</option>
+          <option value="Lifestyle & Wellness">Lifestyle & Wellness</option>
+          <option value="Loans & EMI">Loans & EMI</option>
+          <option value="Subscriptions & Utilities">Subscriptions & Utilities</option>
+          <option value="Investments">Investments</option>
+          <option value="Miscellaneous">Miscellaneous</option>
+        </select>
+      </div>
+      <div class="flex items-center justify-end gap-2">
+        <button onclick="closeCategoryEdit()" class="px-3 py-1.5 text-[12px] font-semibold text-on-surface-variant hover:text-on-surface">Cancel</button>
+        <button onclick="saveCategoryEdit()" class="px-4 py-1.5 bg-primary-container text-on-primary text-[12px] font-semibold rounded hover:bg-on-surface">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SEE WHY / RECOMMENDATION AUDIT MODAL ================= -->
+  <div id="seeWhyModal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-surface-container-lowest border border-[#e7e5e0] rounded-xl max-w-lg w-full p-space-xl shadow-2xl relative">
+      <div class="flex items-center justify-between pb-space-sm border-b border-[#e7e5e0] mb-space-md">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary text-[22px]">verified_user</span>
+          <h4 class="font-serif text-[20px] font-semibold text-on-surface">Recommendation Rationale</h4>
+        </div>
+        <button onclick="closeSeeWhyModal()" class="text-on-surface-variant hover:text-on-surface">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <div class="space-y-3 mb-space-lg text-[13px]">
+        <div class="p-3 bg-surface-container-low rounded-lg border border-[#e7e5e0]">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1">1. Fact (Document Verified)</span>
+          <p class="text-on-surface font-medium" id="seeWhyFact">Monthly surplus is ₹27,700 and current emergency runway is 1.3 months.</p>
+        </div>
+
+        <div class="p-3 bg-surface-container-low rounded-lg border border-[#e7e5e0]">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1">2. Calculation (Deterministic Formula)</span>
+          <p class="text-on-surface font-mono text-[12px]" id="seeWhyCalc">₹82,000 income - ₹54,300 expenses = ₹27,700 surplus. ₹73,200 balance / ₹54,300 expenses = 1.3 months runway.</p>
+        </div>
+
+        <div class="p-3 bg-secondary-container/40 rounded-lg border border-secondary-container">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-secondary block mb-1">3. Recommendation (Advisory Proposal)</span>
+          <p class="text-on-surface" id="seeWhyRec">Is surplus mein se ₹10,000 emergency reserve mein allocate karne se aapka liquid buffer 1.5 months tak secure ho sakta hai.</p>
+        </div>
+
+        <div class="p-2.5 bg-amber-50/80 rounded border border-amber-200/80 text-[11px] text-amber-900 flex items-start gap-2">
+          <span class="material-symbols-outlined text-[16px] text-amber-700 shrink-0 mt-0.5">info</span>
+          <span id="seeWhyDisclaimer">Deterministic financial calculation. Not SEBI registered investment advice.</span>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-space-sm border-t border-[#e7e5e0]">
+        <button onclick="closeSeeWhyModal()" class="px-4 py-2 bg-surface-container-lowest border border-[#e7e5e0] text-on-surface text-[12px] font-semibold rounded hover:bg-surface-container">
+          Theek hai
+        </button>
+        <button onclick="closeSeeWhyModal(); switchView('goals');" class="px-4 py-2 bg-primary-container text-on-primary text-[12px] font-semibold rounded hover:bg-on-surface">
+          Goals & Simulator dekhein
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= NEW GOAL MODAL ================= -->
+  <div id="newGoalModal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-surface-container-lowest border border-[#e7e5e0] rounded-xl max-w-md w-full p-space-xl shadow-2xl relative">
+      <div class="flex items-center justify-between pb-space-sm border-b border-[#e7e5e0] mb-space-md">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary text-[22px]">add_circle</span>
+          <h4 class="font-serif text-[20px] font-semibold text-on-surface">Naya Financial Goal</h4>
+        </div>
+        <button onclick="closeNewGoalModal()" class="text-on-surface-variant hover:text-on-surface">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <div class="space-y-3 mb-space-lg text-[13px]">
+        <div>
+          <label class="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Goal Title</label>
+          <input id="newGoalTitle" type="text" placeholder="e.g. Emergency Fund, Car Down Payment" class="w-full p-2 bg-surface-container-low rounded border border-[#e7e5e0] text-on-surface text-[13px] focus:outline-none"/>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Target Amount (₹)</label>
+            <input id="newGoalTarget" type="number" placeholder="150000" class="w-full p-2 bg-surface-container-low rounded border border-[#e7e5e0] text-on-surface text-[13px] focus:outline-none"/>
+          </div>
+          <div>
+            <label class="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Current Saved (₹)</label>
+            <input id="newGoalCurrent" type="number" placeholder="0" class="w-full p-2 bg-surface-container-low rounded border border-[#e7e5e0] text-on-surface text-[13px] focus:outline-none"/>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Monthly Contribution (₹)</label>
+            <input id="newGoalMonthly" type="number" placeholder="5000" class="w-full p-2 bg-surface-container-low rounded border border-[#e7e5e0] text-on-surface text-[13px] focus:outline-none"/>
+          </div>
+          <div>
+            <label class="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Target Date (Optional)</label>
+            <input id="newGoalTargetDate" type="date" class="w-full p-2 bg-surface-container-low rounded border border-[#e7e5e0] text-on-surface text-[13px] focus:outline-none"/>
+          </div>
+        </div>
+
+        <div>
+          <label class="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Category</label>
+          <select id="newGoalCategory" class="w-full p-2 bg-surface-container-low rounded border border-[#e7e5e0] text-on-surface text-[13px] focus:outline-none">
+            <option value="SAVINGS">Savings & Contingency</option>
+            <option value="RETIREMENT">Retirement</option>
+            <option value="EDUCATION">Education</option>
+            <option value="PROPERTY">Property / Home</option>
+            <option value="TRAVEL">Travel & Leisure</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-space-sm border-t border-[#e7e5e0]">
+        <button onclick="closeNewGoalModal()" class="px-3 py-1.5 text-[12px] font-semibold text-on-surface-variant hover:text-on-surface">Cancel</button>
+        <button onclick="submitNewGoal()" class="px-4 py-2 bg-primary-container text-on-primary text-[12px] font-semibold rounded hover:bg-on-surface">Goal Create Karein</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/js/viewer.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
